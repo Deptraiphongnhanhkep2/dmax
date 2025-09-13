@@ -37,11 +37,24 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Sidebar xanh luôn cố định */}
-      <aside className="fixed left-0 top-0 h-full w-16 bg-blue-600 text-white z-50 flex flex-col justify-between items-center py-6">
+      {/* Taskbar responsive */}
+      <aside
+        className="
+          fixed z-50 bg-blue-600 text-white
+          flex justify-between items-center
+          /* Mobile: taskbar ngang trên */
+          top-0 left-0 w-full h-16 flex-row px-6
+          /* Desktop: taskbar dọc trái */
+          md:w-16 md:h-full md:flex-col md:py-6 md:px-0
+        "
+      >
         {/* Logo */}
         <a href="#">
-          <img src={Logo} alt="Dmax Logo" className="w-36 h-auto object-contain" />
+          <img
+            src={Logo}
+            alt="Dmax Logo"
+            className="w-20 h-auto object-contain md:w-36"
+          />
         </a>
 
         {/* Toggle nút */}
@@ -52,8 +65,8 @@ export default function Navbar() {
           {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
 
-        {/* Bottom */}
-        <div className="flex flex-col items-center gap-4 text-xs">
+        {/* Right / Bottom section */}
+        <div className="flex items-center gap-6 text-xs md:flex-col md:gap-4">
           <Search className="w-5 h-5" />
           <div>
             <span className="font-bold">EN</span> | VN
@@ -66,11 +79,32 @@ export default function Navbar() {
         {open && (
           <motion.div
             key="panel"
-            initial={{ x: "-100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "-100%" }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="fixed inset-0 bg-white z-40 flex flex-col justify-center px-8"
+            initial={{
+              x: 0,
+              y: "-100%", // mobile: từ trên xuống
+            }}
+            animate={{
+              x: 0,
+              y: 0,
+            }}
+            exit={{
+              x: 0,
+              y: "-100%",
+            }}
+            transition={{
+              duration: 0.4,
+              ease: "easeInOut",
+            }}
+            className="
+              fixed inset-0 bg-white z-40 flex flex-col justify-center px-8
+              md:initial
+              md:animate
+              md:exit
+              md:transition
+              md:initial-x-[-100%] md:initial-y-0
+              md:animate-x-0 md:animate-y-0
+              md:exit-x-[-100%] md:exit-y-0
+            "
           >
             <motion.div
               variants={container}
